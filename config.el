@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
+(setq doom-theme 'doom-solarized-light)
 (setq doom-font (font-spec :family "SpaceMono Nerd Font" :size 14)
       doom-variable-pitch-font (font-spec :family "Helvetica" :size 15)
       doom-big-font (font-spec :family "SpaceMono Nerd Font" :size 24))
@@ -80,16 +80,26 @@
 ;; (add-hook 'python-mode-hook 'flycheck-mode)
 
 (setenv "GO111MODULE" "on")
-(setq flycheck-golangci-lint-deadline "5s")
+(setq flycheck-golangci-lint-deadline "1m")
 (setq flycheck-golangci-lint-enable-linters '("dupl" "gci" "godot" "gofmt" "golint" "gosec" "lll" "misspell" "tparallel" "unparam" "whitespace" "wsl" "bodyclose" "sqlclosecheck" "gofumpt" "maligned"))
+
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
 
 (add-hook! 'lsp-after-initialize-hook
   (run-hooks (intern (format "%s-lsp-hook" major-mode))))
 
 (defun go-flycheck-setup ()
-  (flycheck-add-next-checker 'lsp 'golangci-lint))
+  (setq flycheck-checker 'go-gofmt))
+
 (add-hook 'go-mode-lsp-hook #'go-flycheck-setup)
 
 (setq doom-modeline-buffer-file-name-style 'truncate-from-project)
 
 (setq highlight-indent-guides-method 'character)
+
+(defun my-doom-modeline--font-height ()
+  "Calculate the actual char height of the mode-line."
+  (+ (frame-char-height) 2))
+
+(advice-add #'doom-modeline--font-height :override #'my-doom-modeline--font-height)
