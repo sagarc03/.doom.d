@@ -21,11 +21,10 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-molokai)
 (setq doom-font (font-spec :family "SpaceMono Nerd Font" :size 14)
       doom-variable-pitch-font (font-spec :family "Helvetica" :size 15)
       doom-big-font (font-spec :family "SpaceMono Nerd Font" :size 24))
@@ -35,9 +34,10 @@
 (custom-set-faces!
   '(font-lock-keyword-face :slant italic)
   '(font-lock-comment-face :slant italic))
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/Dropbox/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -63,6 +63,7 @@
 
 (setq projectile-project-search-path '("~/repos/"))
 (require 'py-yapf)
+(require 'flycheck-mypy)
 
 (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
 (add-hook 'python-mode-hook
@@ -76,12 +77,9 @@
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 
-(require 'flycheck-mypy)
 ;; (add-hook 'python-mode-hook 'flycheck-mode)
 
 (setenv "GO111MODULE" "on")
-(setq flycheck-golangci-lint-deadline "1m")
-(setq flycheck-golangci-lint-enable-linters '("dupl" "gci" "godot" "gofmt" "golint" "gosec" "lll" "misspell" "tparallel" "unparam" "whitespace" "wsl" "bodyclose" "sqlclosecheck" "gofumpt" "maligned"))
 
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
@@ -89,8 +87,9 @@
 (add-hook! 'lsp-after-initialize-hook
   (run-hooks (intern (format "%s-lsp-hook" major-mode))))
 
+  ;; (setq flycheck-checker 'go-gofmt))
 (defun go-flycheck-setup ()
-  (setq flycheck-checker 'go-gofmt))
+  (flycheck-add-next-checker 'lsp 'go-gofmt))
 
 (add-hook 'go-mode-lsp-hook #'go-flycheck-setup)
 
@@ -103,3 +102,16 @@
   (+ (frame-char-height) 2))
 
 (advice-add #'doom-modeline--font-height :override #'my-doom-modeline--font-height)
+(setq org-log-done t)
+(setq deft-directory "~/Dropbox/org/notes/"
+      def-extensions '("org" "test")
+      deft-recursive t)
+
+(setq org-journal-date-prefix "$+TITILE: "
+      org-journal-time-prefix "* "
+      org-journal-date-format "%a, %Y-%m-%d"
+      org-journal-file-format "%Y-%m-%d.org")
+
+(setq org-roam-directory "~/Dropbox/org/roam")
+(add-hook 'org-mode-hook 'turn-on-auto-fill)
+(setq ispell-dictionary "en_US")
