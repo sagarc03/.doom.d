@@ -24,10 +24,10 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-molokai)
-(setq doom-font (font-spec :family "SpaceMono Nerd Font" :size 14)
-      doom-variable-pitch-font (font-spec :family "Helvetica" :size 15)
-      doom-big-font (font-spec :family "SpaceMono Nerd Font" :size 24))
+(setq doom-theme 'doom-vibrant)
+(setq doom-font (font-spec :family "Iosevka SS04":size 16 :weight 'semibold)
+      doom-variable-pitch-font (font-spec :family "Source Sans 3" :size 14 :weight 'semibold)
+      doom-big-font (font-spec :family "Iosevka SS04" :size 26))
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
@@ -64,6 +64,7 @@
 (setq projectile-project-search-path '("~/repos/"))
 (require 'py-yapf)
 (require 'flycheck-mypy)
+(require 'auto-virtualenv)
 
 (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
 (add-hook 'python-mode-hook
