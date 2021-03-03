@@ -62,19 +62,10 @@
 ;; they are implemented.
 
 (setq projectile-project-search-path '("~/repos/"))
-(require 'py-yapf)
-(require 'flycheck-mypy)
 (require 'auto-virtualenv)
 
 (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
-(add-hook 'python-mode-hook
-          (lambda ()
-            (add-hook 'before-save-hook 'py-isort-before-save nil 'make-it-local)
-            (add-hook 'before-save-hook 'py-yapf-enable-on-save nil 'make-it-local)
-            (add-hook 'before-save-hook 'py-autopep8-enable-on-save nil 'make-it-local)
-            (setq flycheck-checker 'python-flake8)))
 
-(setq +python-jupyter-repl-args '("--simple-prompt"))
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
 
@@ -88,9 +79,9 @@
 (add-hook! 'lsp-after-initialize-hook
   (run-hooks (intern (format "%s-lsp-hook" major-mode))))
 
-  ;; (setq flycheck-checker 'go-gofmt))
-(defun go-flycheck-setup ()
-  (flycheck-add-next-checker 'lsp 'go-gofmt))
+ ;; (setq flycheck-checker 'go-gofmt))
+;; (defun go-flycheck-setup ()
+;;   (flycheck-add-next-checker 'lsp 'go-gofmt))
 
 (add-hook 'go-mode-lsp-hook #'go-flycheck-setup)
 
@@ -116,3 +107,5 @@
 (setq org-roam-directory "~/Dropbox/org/roam")
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
 (setq ispell-dictionary "en_US")
+
+(setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
