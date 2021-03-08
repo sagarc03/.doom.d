@@ -50,7 +50,5 @@
 ;(unpin! t)
 
 (package! flycheck-mypy)
-(package! py-yapf)
 (package! py-autopep8)
 (package! auto-virtualenv)
-(package! flycheck-golangci-lint)
