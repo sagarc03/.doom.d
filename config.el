@@ -24,9 +24,9 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-nord)
 (setq doom-font (font-spec :family "Iosevka SS04":size 16 :weight 'semibold)
-      doom-variable-pitch-font (font-spec :family "Source Sans 3" :size 14 :weight 'semibold)
+      doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 14 :weight 'semibold)
       doom-big-font (font-spec :family "Iosevka SS04" :size 26))
 (after! doom-themes
   (setq doom-themes-enable-bold t
